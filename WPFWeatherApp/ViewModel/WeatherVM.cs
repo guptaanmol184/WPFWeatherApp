@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,8 @@ namespace WPFWeatherApp.ViewModel
                 OnPropertyChanged(nameof(Query));
             }
         }
+
+        public ObservableCollection<City> Cities { get; set; }
 
         private CurrentConditions currentConditions;
 
@@ -70,6 +73,7 @@ namespace WPFWeatherApp.ViewModel
             }
 
             SearchCommand = new SearchCommand(this);
+            Cities = new ObservableCollection<City>();
         }
 
         private void OnPropertyChanged(string propertyName)
@@ -80,6 +84,9 @@ namespace WPFWeatherApp.ViewModel
         public async void MakeQuery()
         {
             var cities = await AccuWeatherHelper.GetCities(Query);
+
+            Cities.Clear();
+            cities.ForEach(city => Cities.Add(city));
         }
     }
 }
