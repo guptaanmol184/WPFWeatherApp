@@ -43,9 +43,10 @@
             <StackPanel Margin="0,10">
                 <TextBlock
                     Margin="20,0"
+                    DataContext="{StaticResource weatherVM}"
                     FontSize="20"
                     Foreground="#f4f4f8"
-                    Text="" />
+                    Text="{Binding SelectedCity.LocalizedName}" />
                 <TextBlock
                     Margin="20,0"
                     FontSize="18"
@@ -58,7 +59,7 @@
                 VerticalAlignment="Center"
                 FontSize="30"
                 Foreground="#f4f4f8"
-                Text="{Binding Temperature.Metric.Value, StringFormat={}{0}{°C}}" />
+                Text="{Binding Temperature.Metric.Value, StringFormat={}{0}°C}" />
         </Grid>
     </Grid>
 </Window>

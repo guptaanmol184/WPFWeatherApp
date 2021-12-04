@@ -27,15 +27,45 @@ namespace WPFWeatherApp.ViewModel
         public CurrentConditions CurrentConditions
         {
             get { return currentConditions; }
-            set 
-            { 
+            set
+            {
                 currentConditions = value;
                 OnPropertyChanged(nameof(CurrentConditions));
             }
         }
 
+        private City selectedCity;
+
+        public City SelectedCity
+        {
+            get { return selectedCity; }
+            set { selectedCity = value; }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public WeatherVM()
+        {
+            if (DesignerProperties.GetIsInDesignMode(new System.Windows.DependencyObject()))
+            {
+                SelectedCity = new City()
+                {
+                    LocalizedName = "India"
+                };
+                CurrentConditions = new CurrentConditions()
+                {
+                    WeatherText = "Partly Cloudy",
+                    Temperature = new Temperature()
+                    {
+                        Metric = new Units()
+                        {
+                            Value = 21
+                        }
+                    }
+                };
+            }
+
+        }
 
         private void OnPropertyChanged(string propertyName)
         {
