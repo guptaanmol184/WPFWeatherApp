@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WPFWeatherApp.Model;
+using WPFWeatherApp.ViewModel.Commands;
+using WPFWeatherApp.ViewModel.Helpers;
 
 namespace WPFWeatherApp.ViewModel
 {
@@ -42,6 +44,8 @@ namespace WPFWeatherApp.ViewModel
             set { selectedCity = value; }
         }
 
+        public SearchCommand SearchCommand { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public WeatherVM()
@@ -65,11 +69,17 @@ namespace WPFWeatherApp.ViewModel
                 };
             }
 
+            SearchCommand = new SearchCommand(this);
         }
 
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public async void MakeQuery()
+        {
+            var cities = await AccuWeatherHelper.GetCities(Query);
         }
     }
 }

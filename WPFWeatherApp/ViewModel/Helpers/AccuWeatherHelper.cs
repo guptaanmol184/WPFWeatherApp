@@ -7,7 +7,7 @@ using WPFWeatherApp.Model;
 
 namespace WPFWeatherApp.ViewModel.Helpers
 {
-    internal class AccuWeatherHelper
+    public class AccuWeatherHelper
     {
         public const string BASE_URL = "http://dataservice.accuweather.com";
         public const string AUTOCOMPLETE_ENDPOINT = "/locations/v1/cities/autocomplete?apikey={0}&q={1}";
