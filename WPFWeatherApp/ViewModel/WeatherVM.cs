@@ -44,7 +44,15 @@ namespace WPFWeatherApp.ViewModel
         public City SelectedCity
         {
             get { return selectedCity; }
-            set { selectedCity = value; }
+            set
+            {
+                selectedCity = value;
+                if (selectedCity != null)
+                {
+                    OnPropertyChanged(nameof(SelectedCity));
+                    GetCurrentConditions();
+                }
+            }
         }
 
         public SearchCommand SearchCommand { get; set; }
@@ -66,7 +74,7 @@ namespace WPFWeatherApp.ViewModel
                     {
                         Metric = new Units()
                         {
-                            Value = 21
+                            Value = "21"
                         }
                     }
                 };
@@ -88,5 +96,17 @@ namespace WPFWeatherApp.ViewModel
             Cities.Clear();
             cities.ForEach(city => Cities.Add(city));
         }
+
+        private async void GetCurrentConditions()
+        {
+            Query = string.Empty;
+            Cities.Clear();
+
+            if(SelectedCity != null)
+            {
+                CurrentConditions = await AccuWeatherHelper.GetCurrentConditions(SelectedCity.Key);
+            }
+        }
+
     }
 }
